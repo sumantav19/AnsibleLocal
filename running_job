@@ -1,0 +1,6 @@
+#!/bin/bash -e
+until [ "$run" == "stop" ]
+do
+    sleep 2m
+    echo "running"
+done

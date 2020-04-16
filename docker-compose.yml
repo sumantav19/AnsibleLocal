@@ -1,0 +1,32 @@
+version: '3'
+services:
+  master:
+    build: .
+    volumes:
+      - ./hosts:/root/hosts
+      - ./initial.yml:/root/initial.yml
+      - ./running_job:/usr/bin/running_job
+      - ./id_rsa.pub:/root/.ssh/id_rsa.pub
+      - ./authorized_keys:/root/.ssh/authorized_keys
+      - ./kube-dependencies.yml:/root/kube-dependencies.yml
+      - ./master.yml:/root/master.yml
+      - ./workers.yml:/workers.yml
+    command: /usr/bin/running_job
+  slave1:
+    build: 
+      context: .
+      dockerfile: Dockerfileworker
+    volumes: 
+      - ./running_job:/usr/bin/running_job
+      # - ./id_dsa.pub:/root/.ssh/id_dsa.pub
+      - ./authorized_keys:/root/.ssh/authorized_keys
+    command: /usr/bin/running_job
+  slave2:
+    build: 
+      context: .
+      dockerfile: Dockerfileworker
+    volumes: 
+      - ./running_job:/usr/bin/running_job
+      # - ./id_dsa.pub:/root/.ssh/id_dsa.pub
+      - ./authorized_keys:/root/.ssh/authorized_keys
+    command: /usr/bin/running_job
